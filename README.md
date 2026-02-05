@@ -58,7 +58,7 @@ Logs / Dashboard / Reports
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-# 🛠 STEP 1 — Environment Setup (Do This First)
+# STEP 1 — Environment Setup (Do This First)
 
 ### 1️⃣ Install Python
 
