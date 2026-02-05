@@ -1,6 +1,7 @@
-# Sentinel Shield – Advanced Intrusion Detection & Web Protection System:
+#3# Sentinel Shield – Advanced Intrusion Detection & Web Protection System:
 
 Sentinel Shield is an academic cybersecurity project that simulates how a real-world **Intrusion Detection System (IDS)** and **Web Application Firewall (WAF)** work.  
+
 It inspects incoming HTTP requests, detects common web attacks, logs suspicious activity, and generates alerts.
 
 
@@ -215,7 +216,6 @@ if __name__ == "__main__":
 ```
 
 # STEP 7 — Dashboard (dashboard.py + HTML)
-dashboard.py
 ```
 from collections import Counter
 
@@ -232,7 +232,7 @@ def get_summary():
     return counts
 ```
 
-HTML template in `templates/dashboard.html`:
+**HTML template in `templates/dashboard.html`:**
 
 ```html
 <!DOCTYPE html>
@@ -252,13 +252,14 @@ HTML template in `templates/dashboard.html`:
 </html>
 ```
 
-# ▶ STEP 8 — Run the Project
+# STEP 8 — Run the Project
 
-```
+```cmd
 python app.py
 ```
 
 Server will start at:
+
 👉 http://127.0.0.1:5000
 
 Test with:
@@ -340,7 +341,7 @@ It shows how attacks are detected, logged, and analyzed — the same workflow us
 *****************************************************************************************************************************************************************************
 
 
-🙋‍♀️ Why didn’t I use Microsoft Sentinel?
+🙋‍♀️ **Why didn’t I use Microsoft Sentinel?**
 ```
 The goal of Sentinel Shield was to understand and implement the core detection, logging, and alerting logic myself, similar to how a WAF/IDS works internally.
 Microsoft Sentinel is a SIEM platform, which sits on top of detection systems.
@@ -348,7 +349,7 @@ My project focuses on building the detection layer — request inspection, rule-
 ```
 
 
-🙋‍♀️Am I using a real product called “Sentinel Shield”?
+🙋‍♀️ **Am I using a real product called “Sentinel Shield”?**
 ```
 👉 No. This project does not use any real commercial product named Sentinel Shield.
 
