@@ -336,7 +336,10 @@ These logs simulate what a SOC analyst would review.
 Sentinel Shield bridges the gap between **theory and real-world cybersecurity practice**.
 It shows how attacks are detected, logged, and analyzed — the same workflow used in real security operations.
 
+-----------------------------------------------------------------------------------------------------------------------------
 
+## OUTPUT
+<img width="1918" height="1021" alt="Image" src="https://github.com/user-attachments/assets/fe939a76-f61d-4055-b5d3-3447f514a169" />
 
 
 
