@@ -32,7 +32,6 @@ It inspects incoming HTTP requests, detects common web attacks, logs suspicious 
    - The request is blocked or flagged
    - The event is logged
    - An alert is generated
-
 Think of Sentinel Shield as a **security guard for your web application**.
 -----------------------------------------------------------------------------------------------------------------------------
 
