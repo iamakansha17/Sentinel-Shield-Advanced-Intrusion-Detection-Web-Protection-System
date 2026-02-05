@@ -56,96 +56,101 @@ Logs / Dashboard / Reports
 
 Check:
 
-```bash
-python --version
-```
+```python --version```
 
 If not installed, install from python.org
 
----
-
 ### 2️⃣ Create Project Folder
 
-```bash
+```
 mkdir sentinel-shield
 cd sentinel-shield
 ```
 
----
-
 ### 3️⃣ Create Virtual Environment (Good Practice)
 
-```bash
+```
 python -m venv venv
 venv\Scripts\activate   # Windows
 source venv/bin/activate  # Linux/Mac
 ```
 
----
-
 ### 4️⃣ Install Flask
 
-```bash
+```
 pip install flask
 ```
-
----
 
 ### 5️⃣ Create Files
 
 Create these files:
 
 ```
-sentinel-shield/
-├── app.py
-├── detector.py
-├── rate_limiter.py
-├── logger.py
-├── dashboard.py
-├── rules.json
-├── logs/
-│   └── security.log
-├── templates/
-│   └── dashboard.html
+📁Sentinel-Shield/
+│
+├── app.py  # Main Flask application
+├── dashboard.py  # Simple dashboard view
+├── detector.py  # Detection logic
+├── logger.py  # Logging & alerting
+├── rate_limiter.py  # IP behavior tracking
+├── rules.json  # Attack signatures and patterns
+│
+📁├── logs/
+│ └── security_logs
+│
+📁├── templates/
+│ └── dashboard.html
+│
+├── README.md
 └── requirements.txt
 ```
 
----
+# STEP 2 — Detection Rules (rules.json)
 
-# 🧠 STEP 2 — Detection Rules (rules.json)
-
-```json
+```
 {
-  "SQLi": ["(?i)union\\s+select", "(?i)or\\s+1=1", "(?i)drop\\s+table"],
-  "XSS": ["<script>", "onerror=", "onload="],
-  "LFI": ["\\.\\./", "/etc/passwd"],
-  "CMDi": [";\\s*ls", ";\\s*whoami"]
+  "XSS": [
+    "<script>",
+    "onerror",
+    "onload",
+    "alert\\("
+  ],
+  "SQL Injection": [
+    "select .* from",
+    "union select",
+    "or 1=1",
+    "' or '1'='1"
+  ]
 }
+
 ```
 
----
+# STEP 3 — Detection Engine (detector.py)
 
-# 🔍 STEP 3 — Detection Engine (detector.py)
-
-```python
-import re, json
+```
+import re
+import json
+from logger import log_event
 
 with open("rules.json") as f:
     RULES = json.load(f)
 
-def detect_attack(data):
+def inspect_request(req):
+    data = req.query_string.decode().lower()
+
+    print("[+] Raw Data:", data)
+
     for attack, patterns in RULES.items():
         for pattern in patterns:
             if re.search(pattern, data):
-                return attack
-    return None
+                ip = req.remote_addr
+                print(f"[!] Attack detected: {attack} from {ip}")
+                log_event(ip, attack)
 ```
 
----
+# STEP 4 — Rate Limiting (rate_limiter.py)
 
-# 🚦 STEP 4 — Rate Limiting (rate_limiter.py)
-
-```python
+```
 import time
 from collections import defaultdict
 
@@ -160,44 +165,42 @@ def is_abusive(ip):
     return len(REQUEST_LOG[ip]) > LIMIT
 ```
 
----
+# STEP 5 — Logging (logger.py)
 
-# 📝 STEP 5 — Logging (logger.py)
-
-```python
+```
 import logging
+import os
 
-logging.basicConfig(filename="logs/security.log", level=logging.INFO)
+LOG_DIR = "logs"
+LOG_FILE = os.path.join(LOG_DIR, "security.log")
+
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logger = logging.getLogger("sentinel")
+logger.setLevel(logging.INFO)
+
+handler = logging.FileHandler(LOG_FILE)
+formatter = logging.Formatter("%(asctime)s | IP=%(message)s")
+handler.setFormatter(formatter)
+
+if not logger.handlers:
+    logger.addHandler(handler)
 
 def log_event(ip, attack):
-    logging.info(f"IP: {ip} | Attack: {attack}")
+    logger.info(f"{ip} | ATTACK={attack}")
 ```
 
----
+# STEP 6 — Flask App (app.py)
 
-# 🌐 STEP 6 — Flask App (app.py)
-
-```python
-from flask import Flask, request, abort
-from detector import detect_attack
-from rate_limiter import is_abusive
-from logger import log_event
+```
+from flask import Flask, request
+from detector import inspect_request
 
 app = Flask(__name__)
 
 @app.before_request
-def inspect():
-    ip = request.remote_addr
-    data = request.full_path + str(request.data)
-
-    if is_abusive(ip):
-        log_event(ip, "RateLimit")
-        abort(429)
-
-    attack = detect_attack(data)
-    if attack:
-        log_event(ip, attack)
-        abort(403)
+def before():
+    inspect_request(request)
 
 @app.route("/")
 def home():
@@ -207,75 +210,117 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
----
+# STEP 7 — Dashboard (dashboard.py + HTML)
 
-# 📊 STEP 7 — Dashboard (dashboard.py + HTML)
-
-```python
+```
 from collections import Counter
 
 def get_summary():
     counts = Counter()
-    with open("logs/security.log") as f:
-        for line in f:
-            if "Attack" in line:
-                attack = line.split("Attack:")[1].strip()
-                counts[attack] += 1
+    try:
+        with open("logs/security.log") as f:
+            for line in f:
+                if "Attack:" in line:
+                    attack = line.split("Attack:")[1].strip()
+                    counts[attack] += 1
+    except FileNotFoundError:
+        pass
     return counts
 ```
 
 HTML template in `templates/dashboard.html`:
 
 ```html
-<h2>Sentinel Shield Dashboard</h2>
-<ul>
-{% for k,v in summary.items() %}
-<li>{{k}} : {{v}}</li>
-{% endfor %}
-</ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentinel Shield Dashboard</title>
+</head>
+<body>
+    <h2>Sentinel Shield – Security Dashboard</h2>
+    <p>Attack Summary:</p>
+    <ul>
+        {% for k, v in summary.items() %}
+        <li><strong>{{ k }}</strong> : {{ v }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
 ```
-
----
 
 # ▶ STEP 8 — Run the Project
 
-```bash
+```
 python app.py
 ```
 
-Open:
-👉 [http://127.0.0.1:5000](http://127.0.0.1:5000)
+Server will start at:
+👉 http://127.0.0.1:5000
 
 Test with:
-
 ```
 http://127.0.0.1:5000/?q=<script>alert(1)</script>
 ```
 
+## Testing the System
+
+### Normal Request
+
+```
+curl "http://127.0.0.1:5000/?q=hello"
+```
+
+### SQL Injection Test
+
+```
+curl "http://127.0.0.1:5000/?q=' OR 1=1 --"
+```
+
+### XSS Test
+
+```
+curl "http://127.0.0.1:5000/?q=<script>alert(1)</script>"
+```
+
+### LFI Test
+
+```
+curl "http://127.0.0.1:5000/?q=../../etc/passwd"
+```
+-----------------------------------------------------------------------------------------------------------------------------
+
+## Logs & Output
+
+All detected events are stored in:
+
+```
+logs/security_logs.json
+```
+
+Each entry contains:
+• Timestamp
+• Source IP
+• Detected attack type
+• Action taken
+
+These logs simulate what a SOC analyst would review.
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+## Testing Strategy
+
+✔ Send normal requests → should be allowed
+✔ Send attack payloads → should be blocked
+✔ Send repeated requests → rate limited
+✔ Review logs → verify detection accuracy
+
+## 📌 Conclusion
+
+Sentinel Shield bridges the gap between **theory and real-world cybersecurity practice**.
+It shows how attacks are detected, logged, and analyzed — the same workflow used in real security operations.
 
 
 
 
-
-
-## Project Structure
-
-📁Sentinel-Shield/
-│
-├── app.py
-├── dashboard.py
-├── detector.py
-├── logger.py
-├── rate_limiter.py
-├── rules.json
-│
-📁├── logs/
-│ └── security_logs
-│
-📁├── templates/
-│ └── dashboard.html
-│
-├── README.md
-└── requirements.txt
 
 
