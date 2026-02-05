@@ -31,11 +31,10 @@ It inspects incoming HTTP requests, detects common web attacks, logs suspicious 
 **4.** IP behavior is monitored (rate limiting)  
 **5.** If malicious or abusive:
 
-  ~ The request is blocked or flagged
+• The request is blocked or flagged  
+• The event is logged
 
-  ~ The event is logged
-
-  ~ An alert is generated
+• An alert is generated 
 
 Think of Sentinel Shield as a **security guard for your web application**.
 
