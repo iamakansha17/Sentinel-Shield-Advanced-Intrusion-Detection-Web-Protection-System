@@ -294,7 +294,7 @@ curl "http://127.0.0.1:5000/?q=../../etc/passwd"
 All detected events are stored in:
 
 ```
-logs/security_logs.json
+logs/security_logs
 ```
 
 Each entry contains:
