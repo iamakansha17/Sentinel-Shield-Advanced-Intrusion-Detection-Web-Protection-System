@@ -1,0 +1,14 @@
+{
+  "XSS": [
+    "<script>",
+    "onerror",
+    "onload",
+    "alert\\("
+  ],
+  "SQL Injection": [
+    "select .* from",
+    "union select",
+    "or 1=1",
+    "' or '1'='1"
+  ]
+}
