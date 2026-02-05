@@ -1,4 +1,4 @@
-#3# Sentinel Shield – Advanced Intrusion Detection & Web Protection System:
+## Sentinel Shield – Advanced Intrusion Detection & Web Protection System:
 
 Sentinel Shield is an academic cybersecurity project that simulates how a real-world **Intrusion Detection System (IDS)** and **Web Application Firewall (WAF)** work.  
 
