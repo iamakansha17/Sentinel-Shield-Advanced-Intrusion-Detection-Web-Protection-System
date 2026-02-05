@@ -37,21 +37,14 @@ Think of Sentinel Shield as a **security guard for your web application**.
 -----------------------------------------------------------------------------------------------------------------------------
 
 User Request
-
 ↓
 Web App (Flask)
-
 ↓
 Sentinel Shield Engine
-
 ├── Request Inspection
-
 ├── Rule-Based Detection
-
 ├── Behavior Monitoring (Rate Limiting)
-
 ├── Logging & Alerts
-
 ↓
 Logs / Dashboard / Reports
 
