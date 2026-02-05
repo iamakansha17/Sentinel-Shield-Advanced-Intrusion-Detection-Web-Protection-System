@@ -66,17 +66,13 @@ Check:
 
 ```python --version```
 
-If not installed, install from python.org
-
 ### 2️⃣ Create Project Folder
-
 ```
 mkdir sentinel-shield
 cd sentinel-shield
 ```
 
 ### 3️⃣ Create Virtual Environment (Good Practice)
-
 ```
 python -m venv venv
 venv\Scripts\activate   # Windows
@@ -84,7 +80,6 @@ source venv/bin/activate  # Linux/Mac
 ```
 
 ### 4️⃣ Install Flask
-
 ```
 pip install flask
 ```
