@@ -47,8 +47,11 @@ Web App (Flask)
 Sentinel Shield Engine
 
 ├── Request Inspection
+
 ├── Rule-Based Detection
+
 ├── Behavior Monitoring (Rate Limiting)
+
 ├── Logging & Alerts
 ↓
 Logs / Dashboard / Reports
@@ -272,25 +275,25 @@ http://127.0.0.1:5000/?q=<script>alert(1)</script>
 ### Normal Request
 
 ```
-curl "http://127.0.0.1:5000/?q=hello"
+"http://127.0.0.1:5000/?q=hello"
 ```
 
 ### SQL Injection Test
 
 ```
-curl "http://127.0.0.1:5000/?q=' OR 1=1 --"
+"http://127.0.0.1:5000/?q=' OR 1=1 --"
 ```
 
 ### XSS Test
 
 ```
-curl "http://127.0.0.1:5000/?q=<script>alert(1)</script>"
+"http://127.0.0.1:5000/?q=<script>alert(1)</script>"
 ```
 
 ### LFI Test
 
 ```
-curl "http://127.0.0.1:5000/?q=../../etc/passwd"
+"http://127.0.0.1:5000/?q=../../etc/passwd"
 ```
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -303,9 +306,13 @@ logs/security_logs
 ```
 
 Each entry contains:
+
 • Timestamp
+
 • Source IP
+
 • Detected attack type
+
 • Action taken
 
 These logs simulate what a SOC analyst would review.
@@ -315,9 +322,14 @@ These logs simulate what a SOC analyst would review.
 ## Testing Strategy
 
 ✔ Send normal requests → should be allowed
+
 ✔ Send attack payloads → should be blocked
+
 ✔ Send repeated requests → rate limited
+
 ✔ Review logs → verify detection accuracy
+
+-----------------------------------------------------------------------------------------------------------------------------
 
 ## 📌 Conclusion
 
