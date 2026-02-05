@@ -34,7 +34,8 @@ It inspects incoming HTTP requests, detects common web attacks, logs suspicious 
    - An alert is generated
 
 Think of Sentinel Shield as a **security guard for your web application**.
------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 User Request
 
@@ -56,7 +57,7 @@ Sentinel Shield Engine
 ↓
 Logs / Dashboard / Reports
 
------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 # STEP 1 — Environment Setup (Do This First)
 
@@ -214,7 +215,7 @@ if __name__ == "__main__":
 ```
 
 # STEP 7 — Dashboard (dashboard.py + HTML)
-
+dashboard.py
 ```
 from collections import Counter
 
@@ -290,7 +291,7 @@ http://127.0.0.1:5000/?q=<script>alert(1)</script>
 ```
 "http://127.0.0.1:5000/?q=../../etc/passwd"
 ```
------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Logs & Output
 
@@ -312,7 +313,7 @@ Each entry contains:
 
 These logs simulate what a SOC analyst would review.
 
------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Testing Strategy
 
@@ -324,17 +325,48 @@ These logs simulate what a SOC analyst would review.
 
 ✔ Review logs → verify detection accuracy
 
------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 📌 Conclusion
 
 Sentinel Shield bridges the gap between **theory and real-world cybersecurity practice**.
 It shows how attacks are detected, logged, and analyzed — the same workflow used in real security operations.
 
------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## OUTPUT
 <img width="1918" height="1021" alt="Image" src="https://github.com/user-attachments/assets/fe939a76-f61d-4055-b5d3-3447f514a169" />
+
+*****************************************************************************************************************************************************************************
+
+
+🙋‍♀️ Why didn’t I use Microsoft Sentinel?
+```
+The goal of Sentinel Shield was to understand and implement the core detection, logging, and alerting logic myself, similar to how a WAF/IDS works internally.
+Microsoft Sentinel is a SIEM platform, which sits on top of detection systems.
+My project focuses on building the detection layer — request inspection, rule-based analysis, behavior monitoring, and alert generation — which is the foundation that tools like Sentinel later consume.
+```
+
+
+🙋‍♀️Am I using a real product called “Sentinel Shield”?
+```
+👉 No. This project does not use any real commercial product named Sentinel Shield.
+
+In this project:
+
+• “Sentinel Shield” is a custom, academic project name
+• It represents a student-built IDS/WAF-style system
+• It is not Microsoft Sentinel
+• It is not a real vendor tool
+
+You are building your own detection engine + logging + alerting system, just like how real tools work internally.
+```
+
+
+
+
+
+
 
 
 
