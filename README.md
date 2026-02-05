@@ -95,12 +95,12 @@ Create these files:
 ```
 📁Sentinel-Shield/
 │
-├── app.py  # Main Flask application
-├── dashboard.py  # Simple dashboard view
-├── detector.py  # Detection logic
-├── logger.py  # Logging & alerting
-├── rate_limiter.py  # IP behavior tracking
-├── rules.json  # Attack signatures and patterns
+├── app.py            # Main Flask application
+├── dashboard.py      # Simple dashboard view
+├── detector.py       # Detection logic
+├── logger.py         # Logging & alerting
+├── rate_limiter.py   # IP behavior tracking
+├── rules.json        # Attack signatures and patterns
 │
 📁├── logs/
 │ └── security_logs
@@ -289,7 +289,7 @@ http://127.0.0.1:5000/?q=<script>alert(1)</script>
 "http://127.0.0.1:5000/?q=<script>alert(1)</script>"
 ```
 
-### LFI Test
+### LFI Test (Local File Inclusion Test)
 
 ```
 "http://127.0.0.1:5000/?q=../../etc/passwd"
