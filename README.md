@@ -255,8 +255,8 @@ def get_summary():
 ```
 
 # STEP 8 — Run the Project
-
-```cmd
+Command Prompt:
+```
 python app.py
 ```
 
