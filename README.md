@@ -45,6 +45,7 @@ Web App (Flask)
 ↓
 
 Sentinel Shield Engine
+
 ├── Request Inspection
 ├── Rule-Based Detection
 ├── Behavior Monitoring (Rate Limiting)
