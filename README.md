@@ -103,7 +103,7 @@ Create these files:
 ├── rules.json        # Attack signatures and patterns
 │
 📁├── logs/
-│ └── security_logs
+│ └── security.log
 │
 📁├── templates/
 │ └── dashboard.html
@@ -301,7 +301,7 @@ http://127.0.0.1:5000/?q=<script>alert(1)</script>
 All detected events are stored in:
 
 ```
-logs/security_logs
+logs/security.log
 ```
 
 Each entry contains:
