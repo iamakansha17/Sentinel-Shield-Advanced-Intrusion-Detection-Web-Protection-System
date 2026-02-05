@@ -30,6 +30,7 @@ It inspects incoming HTTP requests, detects common web attacks, logs suspicious 
 **3.** The detection engine matches known attack patterns  
 **4.** IP behavior is monitored (rate limiting)  
 **5.** If malicious or abusive:
+
          - The request is blocked or flagged
          - The event is logged
          - An alert is generated
